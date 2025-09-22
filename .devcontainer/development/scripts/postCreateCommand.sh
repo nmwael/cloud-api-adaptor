@@ -45,3 +45,6 @@ sudo wget -qO /usr/bin/yq "${YQ_DOWNLOAD_URL}"
 sudo chmod +x /usr/bin/yq
 
 go install github.com/edgelesssys/uplosi@latest
+
+
+sudo curl -L -o /usr/local/bin/hadolint https://github.com/hadolint/hadolint/releases/download/v2.13.1/hadolint-linux-x86_64 &&  sudo chmod +x /usr/local/bin/hadolint

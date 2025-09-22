@@ -3,16 +3,36 @@
 // README at: https://github.com/devcontainers/templates/tree/main/src/alpine
 {
 	"name": "General development container",
-	"image": "mcr.microsoft.com/devcontainers/base:ubuntu-24.04",
-	"postCreateCommand": "bash .devcontainer/development/scripts/postCreateCommand.sh",
+	"image": "mgoltzsche/podman",
 	"capAdd": [
-		"CAP_AUDIT_WRITE"
+		"CAP_AUDIT_WRITE",
+		"CAP_NET_ADMIN",
+		"CAP_SYS_ADMIN"
+	],
+	"runArgs": [
+		"--device=/dev/fuse",
+		"--device=/dev/net/tun",
+		"--security-opt=label=disable",
+		"--tmpfs",
+		"/run",
+		"--security-opt=unmask=/proc/*",
+		"--security-opt",
+		"apparmor=unconfined",
+		"--security-opt",
+		"seccomp=unconfined"
 	],
 	"features": {
-		"ghcr.io/devcontainers/features/docker-outside-of-docker:1": {},
+		"ghcr.io/devcontainers/features/common-utils:2": {},
 		"ghcr.io/devcontainers/features/go:1": {}
 	},
-	"containerEnv": {
-		"CONTAINER_WORKSPACE_FOLDER": "${containerWorkspaceFolder}"
+	"postCreateCommand": "bash .devcontainer/development/scripts/postCreateCommand.sh",
+	"updateRemoteUserUID": false,
+	"remoteUser": "podman",
+	"customizations": {
+		"vscode": {
+			"extensions": [
+				"exiasr.hadolint"
+			]
+		}
 	}
 }
